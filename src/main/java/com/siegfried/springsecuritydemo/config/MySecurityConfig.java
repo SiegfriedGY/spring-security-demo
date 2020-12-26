@@ -27,10 +27,14 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.logout().logoutUrl("/logout")
+                .logoutSuccessUrl("/test/logout").permitAll();
+
         http.formLogin()
                 .loginPage("/login.html")           // 登录页设置
                 .loginProcessingUrl("/user/login")  // 登录访问路径，即controller
-                .defaultSuccessUrl("/test/index").permitAll()    // 登陆成功后跳转的路径
+                .defaultSuccessUrl("/success.html").permitAll()    // 登陆成功后跳转的路径
                 .and().authorizeRequests()
                     .antMatchers("/","/test/hello","/user/login").permitAll()
                 // 基于权限和角色进行访问，4个方法
